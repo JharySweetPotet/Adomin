@@ -1,11 +1,287 @@
-<DOCTYPE html>
+<!DOCTYPE html>
 <html>
+<head>
+<title> Web Layout </title>
 
+<style>
+body {
+    margin: 0;
+    font-family: Arial, sans-serif;
+}
+
+/* Header */
+header {
+    background-color: #2f855a;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+
+/* Top Navigation */
+ul.nav {
+    display: flex;
+    list-style-type: none;
+    margin: 0;
+    padding: 0;
+    background-color: #276749;
+}
+
+ul.nav li {
+    position: relative;
+}
+
+ul.nav li a {
+    display: block;
+    color: #e6fffa;
+    padding: 14px 16px;
+    text-decoration: none;
+}
+
+ul.nav li a:hover {
+    background-color: #38a169;
+    color: black;
+}
+
+/* Dropdown */
+ul.dropdown {
+    display: none;
+    position: absolute;
+    background-color: #276749;
+    list-style-type: none;
+    padding: 0;
+    margin: 0;
+}
+
+ul.nav li:hover ul.dropdown {
+    display: block;
+}
+
+ul.dropdown li a {
+    padding: 12px 16px;
+}
+
+/* Container */
+.container {
+    display: flex;
+    width: 100%;
+}
+
+/* Sidebar */
+.sidebar {
+    width: 30%;
+    background: #9ae6b4;
+    padding: 20px;
+}
+
+.sidebar ul {
+    list-style-type: none;
+    padding: 0;
+}
+
+.sidebar ul li a {
+    display: block;
+    padding: 10px;
+    text-decoration: none;
+    color: #064420;
+    background-color: #c6f6d5;
+    margin-bottom: 5px;
+}
+
+.sidebar ul li a:hover {
+    background-color: #68d391;
+}
+
+.sidebar ul li a.active {
+    background-color: #2f855a;
+    color: white;
+}
+
+/* Article */
+article {
+    padding: 20px;
+    width: 70%;
+    background-color: #f0fff4;
+    min-height: 300px;
+}
+
+.full-width {
+    width: 100% !important;
+}
+
+/* Footer */
+footer {
+    background-color: #2f855a;
+    padding: 10px;
+    text-align: center;
+    color: white;
+}
+</style>
+</head>
 
 <body>
-<h1> 10-Halcon </h1>
-<h2> Tolentino, Jhary C. </h2>
-<h3> LRN </h3>
+
+<header>
+    <h2> SDIHS </h2>
+    <h3 style="font-size: 18px;"> Santo Domingo Integrated High School </h3>
+</header>
+
+<!-- TOP NAVIGATION -->
+<ul class="nav">
+    <li>
+        <a href="#">Home</a>
+        <ul class="dropdown">
+            <li><a href="#" onclick="showHome()">Home</a></li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">Grading</a>
+        <ul class="dropdown">
+            <li><a href="#" onclick="showGrading('first')">First Grading</a></li>
+            <li><a href="#" onclick="showGrading('second')">Second Grading</a></li>
+            <li><a href="#" onclick="showGrading('third')">Third Grading</a></li>
+        </ul>
+    </li>
+
+    <li>
+        <a href="#">About</a>
+        <ul class="dropdown">
+            <li><a href="#" onclick="showAbout()">About</a></li>
+        </ul>
+    </li>
+</ul>
+
+<div class="container">
+
+<!-- SIDEBAR -->
+<nav class="sidebar" id="sidebar">
+    <ul>
+        <li><a href="#" onclick="loadContent('home', this)">School Profile</a></li>
+        <li><a href="#" onclick="loadContent('shs', this)">SHS</a></li>
+        <li><a href="#" onclick="loadContent('jhs', this)">JHS</a></li>
+    </ul>
+</nav>
+
+<!-- MAIN CONTENT -->
+<article id="content">
+    <h1> Welcome </h1>
+    <p>
+        Santo Domingo Integrated High School was founded in 1971. <br>
+        It is located at Barangay Santo Domingo, City of Santa Rosa, Laguna.
+    </p>
+</article>
+
+</div>
+
+<footer>
+    <p> © 2025 SDIHS </p>
+</footer>
+
+<script>
+function setActiveSidebar(el) {
+    const links = document.querySelectorAll(".sidebar a");
+    links.forEach(link => link.classList.remove("active"));
+    if (el) el.classList.add("active");
+}
+
+function showHome() {
+    const sidebar = document.getElementById("sidebar");
+    const article = document.getElementById("content");
+
+    sidebar.style.display = "block";
+    article.classList.remove("full-width");
+
+    loadContent("home");
+}
+
+function showGrading(type) {
+    const sidebar = document.getElementById("sidebar");
+    const article = document.getElementById("content");
+
+    sidebar.style.display = "none";
+    article.classList.add("full-width");
+
+    if (type === "first") {
+        article.innerHTML = "<h2>First Grading</h2><p>Content for First Grading</p>";
+    }
+    if (type === "second") {
+        article.innerHTML = "<h2>Second Grading</h2><p>Content for Second Grading</p>";
+    }
+    if (type === "third") {
+        article.innerHTML = "<h2>Third Grading</h2><p>Content for Third Grading</p>";
+    }
+}
+
+function showAbout() {
+    const sidebar = document.getElementById("sidebar");
+    const article = document.getElementById("content");
+
+    sidebar.style.display = "none";
+    article.classList.add("full-width");
+
+    article.innerHTML =
+        "<h2>About</h2><p>Santo Domingo Integrated High School</p>";
+}
+
+function loadContent(section, el) {
+    setActiveSidebar(el);
+    const content = document.getElementById("content");
+
+    if (section === "home") {
+        content.innerHTML = `
+<h2> School Profile </h2>
+<h3> Mission </h3>
+<p>
+We dream of Filipinos who passionately love their country and whose values and competencies
+enable them to realize their full potential and contribute meaningfully to building the nation.
+</p>
+
+<h3> Vision </h3>
+<p>
+Teachers facilitate learning and constantly nurture every learner Administrators and staff,
+as stewards of the Institution, Ensure an enabling and supportive environment for effective learning to happen.
+</p>
+
+<h3> Core-Values </h3>
+<p> Maka-Diyos, Maka-Tao, Maka-kalikasan, Maka-bansa </p>
+        `;
+    }
+
+    if (section === "shs") {
+        content.innerHTML = `
+<h2> SHS </h2>
+<p>
+Senior High School (SHS) refers to the final two years of secondary education, typically grades 11 and 12,
+which prepare students for higher education, employment, or entrepreneurship.
+</p>
+
+<h3> HUMSS </h3>
+<p>
+The Humanities and Social Sciences (HUMSS) strand focuses on human behavior, society, culture, and the arts.
+</p>
+
+<h4> ICT </h4>
+<p>
+The ICT strand provides skills in computer systems, programming, and web design.
+</p>
+
+<h5> EPAS </h5>
+<p>
+Electronic Products Assembly and Servicing focuses on assembling and repairing electronic products.
+</p>
+        `;
+    }
+
+    if (section === "jhs") {
+        content.innerHTML = `
+<h2> JHS </h2>
+<p>
+Junior High School (JHS) refers to the first four years of high school education, typically grades 7 to 10.
+</p>
+        `;
+    }
+}
+</script>
 
 </body>
 </html>
